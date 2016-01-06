@@ -1,6 +1,7 @@
 package wise.liu.collection.list;
 
 
+
 public class ArrayList<AnyType> implements Iterable<AnyType> {
 	private static final int DEFAULT_CAPACITY = 10;
 	
@@ -19,13 +20,12 @@ public class ArrayList<AnyType> implements Iterable<AnyType> {
 		return 0==theSize;
 	}
 
+	public void trimToSize(){
+		ensureCapacity(size());
+	}
 	public void clear() {
 		theSize = 0;
 		ensureCapacity(DEFAULT_CAPACITY);
-	}
-
-	public boolean contains(AnyType x) {
-		return false;
 	}
 
 	public AnyType get(int idx) {
@@ -83,7 +83,44 @@ public class ArrayList<AnyType> implements Iterable<AnyType> {
 
 	@Override
 	public java.util.Iterator<AnyType> iterator() {
-		return null;
+		return new ArrayListIterator();
 	}
 	
+	private class ArrayListIterator implements java.util.Iterator<AnyType>{
+		private int current = 0;
+		@Override
+		public boolean hasNext() {
+			return current < size();
+		}
+
+		@Override
+		public AnyType next() {
+			if(!hasNext())
+				throw new java.util.NoSuchElementException();
+			return theItems[current++];
+		}
+
+		@Override
+		public void remove() {
+			ArrayList.this.remove(current--);
+		}
+		
+	}
+	public static void printList(ArrayList<String> list){
+		for(String str:list){
+			System.out.println(str);
+		}
+	}
+	public static void main(String args[]){
+		ArrayList<String> list = new ArrayList<String>();
+		list.add("a");
+		list.add("b");
+		list.add("c");
+		printList(list);
+		java.util.Iterator it =list.iterator();
+		if(it.hasNext()){
+			it.remove();
+		}
+		printList(list);
+	}
 }
