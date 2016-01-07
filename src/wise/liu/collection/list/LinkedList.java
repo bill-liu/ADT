@@ -77,7 +77,7 @@ public class LinkedList<AnyType> implements Iterable<AnyType> {
 		}
 		
 		if(idx<size()/2){
-			p = beginMarker;
+			p = beginMarker.next;
 			for(int i=0;i<idx;i++){
 				p = p.next;
 			}
@@ -100,8 +100,62 @@ public class LinkedList<AnyType> implements Iterable<AnyType> {
 	}
 	@Override
 	public Iterator<AnyType> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+		return new LinkedListIterator();
+	}
+	
+	private class LinkedListIterator implements Iterator<AnyType>{
+		private Node<AnyType> current =  beginMarker.next;
+		private int expectedModCount = modCount;
+		private boolean okToRemove = false;
+		
+		@Override
+		public boolean hasNext() {
+			return current != endMarker;
+		}
+
+		@Override
+		public AnyType next() {
+			if(modCount != expectedModCount){
+				throw new java.util.ConcurrentModificationException();
+			}
+			if(!hasNext()){
+				throw new java.util.NoSuchElementException();
+			}
+			
+			AnyType nextItem = current.data;
+			current = current.next;
+			okToRemove = true;
+			
+			return nextItem;
+		}
+		
+		public void remove(){
+			if(modCount != expectedModCount){
+				throw new java.util.ConcurrentModificationException();
+			}
+			if(!hasNext()){
+				throw new java.util.NoSuchElementException();
+			}
+			
+			LinkedList.this.remove(current.prev);
+			okToRemove = false;
+			expectedModCount++;
+		}
 	}
 }
 
+class TestLinkedList{
+	public static void main(String args[]){
+		LinkedList<String> linkedList = new LinkedList<String>();
+		linkedList.add("123");
+		linkedList.add("abc");
+		linkedList.add("刘应明");
+		Iterator it = linkedList.iterator();
+		while(it.hasNext()){
+			if("刘应明".equals(it.next())){
+				it.remove();
+			}
+			System.out.println(it.next());
+		}
+	}
+}
