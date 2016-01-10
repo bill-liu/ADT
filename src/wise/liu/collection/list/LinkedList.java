@@ -17,6 +17,9 @@ public class LinkedList<AnyType> implements Iterable<AnyType> {
 			this.prev = prev;
 			this.next = next;
 		}
+		public String toString(){
+			return data.toString();
+		}
 	}
 	
 	public LinkedList(){
@@ -103,6 +106,15 @@ public class LinkedList<AnyType> implements Iterable<AnyType> {
 		return new LinkedListIterator();
 	}
 	
+	public String toString(){
+		Node<AnyType> current = beginMarker.next;
+		StringBuffer sb = new StringBuffer("");
+		while(current != endMarker){
+			sb.append(current.data.toString()).append(" ");
+			current = current.next;
+		}
+		return sb.toString();
+	}
 	private class LinkedListIterator implements Iterator<AnyType>{
 		private Node<AnyType> current =  beginMarker.next;
 		private int expectedModCount = modCount;
@@ -133,8 +145,8 @@ public class LinkedList<AnyType> implements Iterable<AnyType> {
 			if(modCount != expectedModCount){
 				throw new java.util.ConcurrentModificationException();
 			}
-			if(!hasNext()){
-				throw new java.util.NoSuchElementException();
+			if(!okToRemove){
+				throw new IllegalStateException();
 			}
 			
 			LinkedList.this.remove(current.prev);
@@ -151,11 +163,13 @@ class TestLinkedList{
 		linkedList.add("abc");
 		linkedList.add("刘应明");
 		Iterator it = linkedList.iterator();
+		
 		while(it.hasNext()){
-			if("刘应明".equals(it.next())){
+			String n = (String)it.next();
+			if("刘应明".equals(n)){
 				it.remove();
 			}
-			System.out.println(it.next());
 		}
+		System.out.println(linkedList.toString());
 	}
 }
