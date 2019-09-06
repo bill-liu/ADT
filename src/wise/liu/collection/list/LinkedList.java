@@ -17,6 +17,7 @@ public class LinkedList<AnyType> implements Iterable<AnyType> {
 			this.prev = prev;
 			this.next = next;
 		}
+		@Override
 		public String toString(){
 			return data.toString();
 		}
@@ -106,6 +107,7 @@ public class LinkedList<AnyType> implements Iterable<AnyType> {
 		return new LinkedListIterator();
 	}
 	
+	@Override
 	public String toString(){
 		Node<AnyType> current = beginMarker.next;
 		StringBuffer sb = new StringBuffer("");
@@ -141,6 +143,7 @@ public class LinkedList<AnyType> implements Iterable<AnyType> {
 			return nextItem;
 		}
 		
+		@Override
 		public void remove(){
 			if(modCount != expectedModCount){
 				throw new java.util.ConcurrentModificationException();
