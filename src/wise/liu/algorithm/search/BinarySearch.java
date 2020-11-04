@@ -1,4 +1,4 @@
-package wise.liu.collection.search;
+package wise.liu.algorithm.search;
 
 import java.util.ArrayList;
 import java.util.Collections;
