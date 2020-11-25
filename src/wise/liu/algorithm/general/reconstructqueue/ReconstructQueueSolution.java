@@ -26,6 +26,7 @@ import java.util.List;
  */
 public class ReconstructQueueSolution {
     public int[][] reconstructQueue(int[][] people) {
+        //按身高倒序
         Arrays.sort(people, (o1, o2) -> o1[0] == o2[0]?o1[1]-o2[1]:o2[0]-o1[0]);
         List<int[]> list = new ArrayList<>();
         for (int[] a : people){
