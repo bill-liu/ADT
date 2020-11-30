@@ -78,8 +78,32 @@ public class NStepsPer1OR2Solution {
         System.out.println(solution.climbStairs(45));
         System.out.println(System.currentTimeMillis() - end1);
 
-        long end2 = System.currentTimeMillis();
-        System.out.println(solution.stepBase(45));
-        System.out.println(System.currentTimeMillis() - end2);
+//        long end2 = System.currentTimeMillis();
+//        System.out.println(solution.stepBase(45));
+//        System.out.println(System.currentTimeMillis() - end2);
+        int month = 60;
+        int totalMoney = 600000;
+        Double f1 = solution.getTotalFats(month, totalMoney, 0.28/100);
+        Double f2 = solution.getTotalFatsByDayFat(month, totalMoney, 1.9/10000);
+        for(){
+
+        }
+        System.out.println(f1 + "年化:"+ f1/(month/12)/totalMoney*100.0);
+        System.out.println(f2 + "年化:"+ f2/(month/12)/totalMoney*100.0);
+
+    }
+
+    public Double getTotalFats(int month, int totalMoney, Double mFat){
+        return month*totalMoney*mFat;
+    }
+
+    public Double getTotalFatsByDayFat(int month, int totalMoney, Double fat){
+        Double fats  = 0.0;
+        int perPay = totalMoney/month;
+        for (int i=0;i<month;i++) {
+            fats  +=  totalMoney * 30 * fat;
+            totalMoney = totalMoney - perPay;
+        }
+        return fats;
     }
 }
