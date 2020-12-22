@@ -1,4 +1,4 @@
-package wise.liu.algorithm.general.maxprofit;
+package wise.liu.algorithm.dp.maxprofit;
 
 /**
  * 122. 买卖股票的最佳时机 II
