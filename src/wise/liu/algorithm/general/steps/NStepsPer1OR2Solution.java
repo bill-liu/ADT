@@ -85,9 +85,7 @@ public class NStepsPer1OR2Solution {
         int totalMoney = 600000;
         Double f1 = solution.getTotalFats(month, totalMoney, 0.28/100);
         Double f2 = solution.getTotalFatsByDayFat(month, totalMoney, 1.9/10000);
-        for(){
 
-        }
         System.out.println(f1 + "年化:"+ f1/(month/12)/totalMoney*100.0);
         System.out.println(f2 + "年化:"+ f2/(month/12)/totalMoney*100.0);
 
